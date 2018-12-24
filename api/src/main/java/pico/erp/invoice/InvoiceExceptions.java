@@ -17,18 +17,6 @@ public interface InvoiceExceptions {
     private static final long serialVersionUID = 1L;
   }
 
-  @ResponseStatus(code = HttpStatus.NOT_ACCEPTABLE, reason = "invoice.cannot.determine.exception")
-  class CannotDetermineException extends RuntimeException {
-
-    private static final long serialVersionUID = 1L;
-  }
-
-  @ResponseStatus(code = HttpStatus.NOT_ACCEPTABLE, reason = "invoice.cannot.send.exception")
-  class CannotSendException extends RuntimeException {
-
-    private static final long serialVersionUID = 1L;
-  }
-
   @ResponseStatus(code = HttpStatus.NOT_ACCEPTABLE, reason = "invoice.cannot.cancel.exception")
   class CannotCancelException extends RuntimeException {
 
@@ -37,12 +25,6 @@ public interface InvoiceExceptions {
 
   @ResponseStatus(code = HttpStatus.NOT_ACCEPTABLE, reason = "invoice.cannot.receive.exception")
   class CannotReceiveException extends RuntimeException {
-
-    private static final long serialVersionUID = 1L;
-  }
-
-  @ResponseStatus(code = HttpStatus.NOT_ACCEPTABLE, reason = "invoice.cannot.reject.exception")
-  class CannotRejectException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
   }
