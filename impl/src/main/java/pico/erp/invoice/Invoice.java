@@ -14,7 +14,7 @@ import lombok.experimental.FieldDefaults;
 import pico.erp.audit.annotation.Audit;
 import pico.erp.company.CompanyData;
 import pico.erp.shared.data.Address;
-import pico.erp.shared.data.Auditor;
+import pico.erp.user.UserData;
 
 /**
  * 주문 접수
@@ -35,7 +35,7 @@ public class Invoice implements Serializable {
 
   InvoiceCode code;
 
-  CompanyData supplier;
+  CompanyData sender;
 
   CompanyData receiver;
 
@@ -49,7 +49,7 @@ public class Invoice implements Serializable {
 
   InvoiceStatusKind status;
 
-  Auditor confirmedBy;
+  UserData confirmer;
 
   String remark;
 
@@ -61,7 +61,7 @@ public class Invoice implements Serializable {
   public InvoiceMessages.Create.Response apply(
     InvoiceMessages.Create.Request request) {
     this.id = request.getId();
-    this.supplier = request.getSupplier();
+    this.sender = request.getSender();
     this.receiver = request.getReceiver();
     this.receiveAddress = request.getReceiveAddress();
     this.status = InvoiceStatusKind.WAITING;
@@ -79,7 +79,7 @@ public class Invoice implements Serializable {
       throw new InvoiceExceptions.CannotUpdateException();
     }
     this.dueDate = request.getDueDate();
-    this.supplier = request.getSupplier();
+    this.sender = request.getSender();
     this.receiver = request.getReceiver();
     this.receiveAddress = request.getReceiveAddress();
     this.remark = request.getRemark();
@@ -106,7 +106,7 @@ public class Invoice implements Serializable {
     if (!isReceivable()) {
       throw new InvoiceExceptions.CannotReceiveException();
     }
-    this.confirmedBy = request.getConfirmedBy();
+    this.confirmer = request.getConfirmer();
     this.status = InvoiceStatusKind.RECEIVED;
     this.receivedDate = OffsetDateTime.now();
     return new InvoiceMessages.Receive.Response(

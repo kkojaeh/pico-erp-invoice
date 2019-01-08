@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import pico.erp.company.CompanyId;
 import pico.erp.item.ItemId;
 import pico.erp.shared.data.Address;
-import pico.erp.shared.data.Auditor;
 import pico.erp.user.UserId;
 
 @Data
@@ -19,7 +18,7 @@ public class InvoiceView {
 
   InvoiceCode code;
 
-  CompanyId supplierId;
+  CompanyId senderId;
 
   CompanyId receiverId;
 
@@ -33,7 +32,7 @@ public class InvoiceView {
 
   InvoiceStatusKind status;
 
-  Auditor confirmedBy;
+  UserId confirmerId;
 
   @Data
   @NoArgsConstructor
@@ -45,7 +44,7 @@ public class InvoiceView {
 
     CompanyId receiverId;
 
-    CompanyId supplierId;
+    CompanyId senderId;
 
     UserId confirmerId;
 

@@ -30,6 +30,7 @@ import pico.erp.company.CompanyId;
 import pico.erp.shared.TypeDefinitions;
 import pico.erp.shared.data.Address;
 import pico.erp.shared.data.Auditor;
+import pico.erp.user.UserId;
 
 @Entity(name = "Invoice")
 @Table(name = "INV_INVOICE")
@@ -64,9 +65,9 @@ public class InvoiceEntity implements Serializable {
   CompanyId receiverId;
 
   @AttributeOverrides({
-    @AttributeOverride(name = "value", column = @Column(name = "SUPPLIER_ID", length = TypeDefinitions.ID_LENGTH))
+    @AttributeOverride(name = "value", column = @Column(name = "SENDER_ID", length = TypeDefinitions.ID_LENGTH))
   })
-  CompanyId supplierId;
+  CompanyId senderId;
 
   @Embedded
   @AttributeOverrides({
@@ -81,10 +82,9 @@ public class InvoiceEntity implements Serializable {
 
   @Embedded
   @AttributeOverrides({
-    @AttributeOverride(name = "id", column = @Column(name = "CONFIRMED_BY_ID", length = TypeDefinitions.ID_LENGTH)),
-    @AttributeOverride(name = "name", column = @Column(name = "CONFIRMED_BY_NAME", length = TypeDefinitions.NAME_LENGTH))
+    @AttributeOverride(name = "value", column = @Column(name = "CONFIRMER_ID", length = TypeDefinitions.ID_LENGTH))
   })
-  Auditor confirmedBy;
+  UserId confirmerId;
 
   OffsetDateTime receivedDate;
 

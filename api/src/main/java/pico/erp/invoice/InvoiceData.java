@@ -13,7 +13,7 @@ public class InvoiceData {
 
   InvoiceCode code;
 
-  CompanyId supplierId;
+  CompanyId senderId;
 
   CompanyId receiverId;
 
@@ -27,7 +27,7 @@ public class InvoiceData {
 
   InvoiceStatusKind status;
 
-  Auditor confirmedBy;
+  Auditor confirmerId;
 
   String remark;
 

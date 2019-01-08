@@ -18,7 +18,7 @@ create table inv_invoice (
 	receiver_id varchar(50),
 	remark varchar(50),
 	status varchar(20),
-	supplier_id varchar(50),
+	sender_id varchar(50),
 	primary key (id)
 ) engine=InnoDB;
 

@@ -36,7 +36,7 @@ public class InvoiceQueryJpa implements InvoiceQuery {
       invoice.id,
       invoice.code,
       invoice.receiverId,
-      invoice.supplierId,
+      invoice.senderId,
       invoice.receiveAddress,
       invoice.dueDate,
       invoice.receivedDate,
@@ -59,7 +59,7 @@ public class InvoiceQueryJpa implements InvoiceQuery {
     }
 
     if (filter.getConfirmerId() != null) {
-      builder.and(invoice.confirmedBy.id.eq(filter.getConfirmerId().getValue()));
+      builder.and(invoice.confirmerId.eq(filter.getConfirmerId()));
     }
 
     if (filter.getItemId() != null) {

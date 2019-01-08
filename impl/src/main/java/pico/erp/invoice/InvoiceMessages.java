@@ -11,8 +11,8 @@ import lombok.Value;
 import pico.erp.company.CompanyData;
 import pico.erp.shared.TypeDefinitions;
 import pico.erp.shared.data.Address;
-import pico.erp.shared.data.Auditor;
 import pico.erp.shared.event.Event;
+import pico.erp.user.UserData;
 
 public interface InvoiceMessages {
 
@@ -30,7 +30,7 @@ public interface InvoiceMessages {
       OffsetDateTime dueDate;
 
       @NotNull
-      CompanyData supplier;
+      CompanyData sender;
 
       @NotNull
       CompanyData receiver;
@@ -65,7 +65,7 @@ public interface InvoiceMessages {
       OffsetDateTime dueDate;
 
       @NotNull
-      CompanyData supplier;
+      CompanyData sender;
 
       @NotNull
       CompanyData receiver;
@@ -91,7 +91,7 @@ public interface InvoiceMessages {
     @Data
     class Request {
 
-      Auditor confirmedBy;
+      UserData confirmer;
 
     }
 

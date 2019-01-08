@@ -36,7 +36,7 @@ public interface InvoiceRequests {
 
     @Valid
     @NotNull
-    CompanyId supplierId;
+    CompanyId senderId;
 
     @Valid
     @NotNull
@@ -66,7 +66,7 @@ public interface InvoiceRequests {
 
     @Valid
     @NotNull
-    CompanyId supplierId;
+    CompanyId senderId;
 
     @Valid
     @NotNull

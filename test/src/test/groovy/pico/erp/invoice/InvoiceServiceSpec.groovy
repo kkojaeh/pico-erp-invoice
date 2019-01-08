@@ -36,13 +36,13 @@ class InvoiceServiceSpec extends Specification {
 
   def receiverId = CompanyId.from("CUST1")
 
-  def supplierId = CompanyId.from("SUPP1")
+  def senderId = CompanyId.from("SUPP1")
 
   def confirmerId = UserId.from("kjh")
 
   def receiverId2 = CompanyId.from("CUST2")
 
-  def supplierId2 = CompanyId.from("SUPP2")
+  def senderId2 = CompanyId.from("SUPP2")
 
   def dueDate2 = OffsetDateTime.now().plusDays(8)
 
@@ -65,7 +65,7 @@ class InvoiceServiceSpec extends Specification {
       new InvoiceRequests.CreateRequest(
         id: id,
         receiverId: receiverId,
-        supplierId: supplierId,
+        senderId: senderId,
         receiveAddress: receiveAddress,
         dueDate: dueDate,
         remark: remark,
@@ -96,7 +96,7 @@ class InvoiceServiceSpec extends Specification {
       new InvoiceRequests.UpdateRequest(
         id: id,
         receiverId: receiverId2,
-        supplierId: supplierId2,
+        senderId: senderId2,
         receiveAddress: receiveAddress2,
         dueDate: dueDate2,
         remark: remark2
@@ -167,7 +167,7 @@ class InvoiceServiceSpec extends Specification {
 
     then:
     invoice.receiverId == receiverId2
-    invoice.supplierId == supplierId2
+    invoice.senderId == senderId2
     invoice.receiveAddress == receiveAddress2
     invoice.dueDate == dueDate2
     invoice.remark == remark2
@@ -198,7 +198,7 @@ class InvoiceServiceSpec extends Specification {
     def invoice = invoiceService.get(id)
 
     then:
-    invoice.confirmedBy.id == confirmerId.value
+    invoice.confirmerId == confirmerId
   }
 
 
