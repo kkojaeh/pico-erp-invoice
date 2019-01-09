@@ -31,4 +31,10 @@ public class InvoiceData {
 
   String remark;
 
+  boolean cancelable;
+
+  boolean receivable;
+
+  boolean updatable;
+
 }
