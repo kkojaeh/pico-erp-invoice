@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import pico.erp.invoice.InvoiceId;
 import pico.erp.item.ItemId;
 import pico.erp.item.lot.ItemLotId;
+import pico.erp.shared.data.UnitKind;
 
 @Builder
 @AllArgsConstructor
@@ -26,5 +27,7 @@ public class InvoiceItemData {
   BigDecimal quantity;
 
   String remark;
+
+  UnitKind unit;
 
 }

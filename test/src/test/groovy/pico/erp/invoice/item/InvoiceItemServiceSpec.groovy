@@ -133,7 +133,7 @@ class InvoiceItemServiceSpec extends Specification {
     item.invoiceId == invoiceId
     item.quantity == 100
     item.remark == "품목 비고"
-
+    item.unit == UnitKind.EA
   }
 
   def "조회 - 존재하지 않는 아이디로 조회"() {
