@@ -90,6 +90,6 @@ flyway:
   enabled: false
 
 invoice:
-  detail-generation-policy:
-    start-time: "09:00"
-    end-time: "18:00"
+  receiver-group:
+    id: invoice-receiver
+    name: 송장 수령 담당자
