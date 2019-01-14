@@ -2,9 +2,6 @@ banner:
   location: classpath:invoice/banner.txt
 
 spring:
-  profiles:
-    include:
-    - test-cfg
   application:
     name: pico-invoice
   session:
