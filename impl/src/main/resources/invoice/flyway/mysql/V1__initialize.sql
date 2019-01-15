@@ -2,8 +2,7 @@ create table inv_invoice (
 	id binary(16) not null,
 	canceled_date datetime,
 	code varchar(20),
-	confirmed_by_id varchar(50),
-	confirmed_by_name varchar(50),
+	confirmer_id varchar(50),
 	created_by_id varchar(50),
 	created_by_name varchar(50),
 	created_date datetime,
@@ -17,8 +16,8 @@ create table inv_invoice (
 	received_date datetime,
 	receiver_id varchar(50),
 	remark varchar(50),
-	status varchar(20),
 	sender_id varchar(50),
+	status varchar(20),
 	primary key (id)
 ) engine=InnoDB;
 
