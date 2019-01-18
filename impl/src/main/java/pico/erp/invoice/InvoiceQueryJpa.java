@@ -49,6 +49,7 @@ public class InvoiceQueryJpa implements InvoiceQuery {
       invoice.dueDate,
       invoice.receivedDate,
       invoice.canceledDate,
+      invoice.confirmerId,
       invoice.status
     );
 
