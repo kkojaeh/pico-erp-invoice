@@ -1,21 +1,17 @@
-package pico.erp.invoice.item;
+package pico.erp.invoice.item.lot;
 
 import java.math.BigDecimal;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pico.erp.invoice.InvoiceId;
-import pico.erp.item.ItemId;
-import pico.erp.item.spec.ItemSpecCode;
-import pico.erp.shared.TypeDefinitions;
-import pico.erp.shared.data.UnitKind;
+import pico.erp.invoice.item.InvoiceItemId;
+import pico.erp.item.lot.ItemLotCode;
 
-public interface InvoiceItemRequests {
+public interface InvoiceItemLotRequests {
 
   @Data
   @NoArgsConstructor
@@ -25,29 +21,19 @@ public interface InvoiceItemRequests {
 
     @Valid
     @NotNull
-    InvoiceItemId id;
+    InvoiceItemLotId id;
 
     @Valid
     @NotNull
-    InvoiceId invoiceId;
+    InvoiceItemId invoiceItemId;
 
     @Valid
     @NotNull
-    ItemId itemId;
-
-    @Valid
-    @NotNull
-    ItemSpecCode itemSpecCode;
+    ItemLotCode itemLotCode;
 
     @NotNull
     @Min(0)
     BigDecimal quantity;
-
-    @NotNull
-    UnitKind unit;
-
-    @Size(max = TypeDefinitions.REMARK_LENGTH)
-    String remark;
 
   }
 
@@ -59,11 +45,13 @@ public interface InvoiceItemRequests {
 
     @Valid
     @NotNull
-    InvoiceItemId id;
+    InvoiceItemLotId id;
+
+    @Valid
+    @NotNull
+    ItemLotCode itemLotCode;
 
     BigDecimal quantity;
-
-    String remark;
 
   }
 
@@ -75,7 +63,7 @@ public interface InvoiceItemRequests {
 
     @Valid
     @NotNull
-    InvoiceItemId id;
+    InvoiceItemLotId id;
 
   }
 }

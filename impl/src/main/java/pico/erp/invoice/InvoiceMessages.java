@@ -8,11 +8,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.Value;
-import pico.erp.company.CompanyData;
+import pico.erp.company.CompanyId;
 import pico.erp.shared.TypeDefinitions;
 import pico.erp.shared.data.Address;
 import pico.erp.shared.event.Event;
-import pico.erp.user.UserData;
+import pico.erp.user.UserId;
 
 public interface InvoiceMessages {
 
@@ -30,10 +30,10 @@ public interface InvoiceMessages {
       OffsetDateTime dueDate;
 
       @NotNull
-      CompanyData sender;
+      CompanyId senderId;
 
       @NotNull
-      CompanyData receiver;
+      CompanyId receiverId;
 
       @NotNull
       Address receiveAddress;
@@ -65,10 +65,10 @@ public interface InvoiceMessages {
       OffsetDateTime dueDate;
 
       @NotNull
-      CompanyData sender;
+      CompanyId senderId;
 
       @NotNull
-      CompanyData receiver;
+      CompanyId receiverId;
 
       @NotNull
       Address receiveAddress;
@@ -91,7 +91,7 @@ public interface InvoiceMessages {
     @Data
     class Request {
 
-      UserData confirmer;
+      UserId confirmerId;
 
     }
 

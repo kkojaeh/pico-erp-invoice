@@ -1,11 +1,11 @@
-package pico.erp.invoice.item;
+package pico.erp.invoice.item.lot;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pico.erp.shared.event.Event;
 
-public interface InvoiceItemEvents {
+public interface InvoiceItemLotEvents {
 
   @Data
   @AllArgsConstructor
@@ -14,7 +14,7 @@ public interface InvoiceItemEvents {
 
     public final static String CHANNEL = "event.invoice-item.created";
 
-    private InvoiceItemId id;
+    private InvoiceItemLotId id;
 
     public String channel() {
       return CHANNEL;
@@ -29,7 +29,7 @@ public interface InvoiceItemEvents {
 
     public final static String CHANNEL = "event.invoice-item.updated";
 
-    private InvoiceItemId id;
+    private InvoiceItemLotId id;
 
     public String channel() {
       return CHANNEL;
@@ -44,7 +44,7 @@ public interface InvoiceItemEvents {
 
     public final static String CHANNEL = "event.invoice-item.deleted";
 
-    private InvoiceItemId id;
+    private InvoiceItemLotId id;
 
     public String channel() {
       return CHANNEL;

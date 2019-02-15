@@ -16,7 +16,7 @@ public interface InvoiceItemService {
 
   InvoiceItemData get(@Valid @NotNull InvoiceItemId id);
 
-  List<InvoiceItemData> getAll(InvoiceId planId);
+  List<InvoiceItemData> getAll(InvoiceId invoiceId);
 
   void update(@Valid @NotNull InvoiceItemRequests.UpdateRequest request);
 

@@ -1,24 +1,20 @@
-package pico.erp.invoice.item;
+package pico.erp.invoice.item.lot;
 
 import java.math.BigDecimal;
 import java.util.Collection;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Value;
-import pico.erp.invoice.Invoice;
-import pico.erp.item.ItemId;
-import pico.erp.item.spec.ItemSpecCode;
-import pico.erp.shared.TypeDefinitions;
-import pico.erp.shared.data.UnitKind;
+import pico.erp.invoice.item.InvoiceItem;
+import pico.erp.item.lot.ItemLotCode;
 import pico.erp.shared.event.Event;
 
-public interface InvoiceItemMessages {
+public interface InvoiceItemLotMessages {
 
   interface Create {
 
@@ -30,26 +26,17 @@ public interface InvoiceItemMessages {
 
       @Valid
       @NotNull
-      InvoiceItemId id;
+      InvoiceItemLotId id;
 
       @NotNull
-      Invoice invoice;
+      InvoiceItem invoiceItem;
 
       @NotNull
-      ItemId itemId;
-
-      @NotNull
-      ItemSpecCode itemSpecCode;
+      ItemLotCode itemLotCode;
 
       @NotNull
       @Min(0)
       BigDecimal quantity;
-
-      @NotNull
-      UnitKind unit;
-
-      @Size(max = TypeDefinitions.REMARK_LENGTH)
-      String remark;
 
     }
 
@@ -68,11 +55,11 @@ public interface InvoiceItemMessages {
     class Request {
 
       @NotNull
+      ItemLotCode itemLotCode;
+
+      @NotNull
       @Min(0)
       BigDecimal quantity;
-
-      @Size(max = TypeDefinitions.REMARK_LENGTH)
-      String remark;
 
     }
 

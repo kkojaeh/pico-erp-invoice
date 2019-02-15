@@ -60,9 +60,6 @@ public abstract class InvoiceMapper {
   }
 
   @Mappings({
-    @Mapping(target = "receiverId", source = "receiver.id"),
-    @Mapping(target = "senderId", source = "sender.id"),
-    @Mapping(target = "confirmerId", source = "confirmer.id"),
     @Mapping(target = "createdBy", ignore = true),
     @Mapping(target = "createdDate", ignore = true),
     @Mapping(target = "lastModifiedBy", ignore = true),
@@ -75,11 +72,11 @@ public abstract class InvoiceMapper {
       .id(entity.getId())
       .code(entity.getCode())
       .dueDate(entity.getDueDate())
-      .sender(map(entity.getSenderId()))
-      .receiver(map(entity.getReceiverId()))
+      .senderId(entity.getSenderId())
+      .receiverId(entity.getReceiverId())
       .receiveAddress(entity.getReceiveAddress())
       .remark(entity.getRemark())
-      .confirmer(map(entity.getConfirmerId()))
+      .confirmerId(entity.getConfirmerId())
       .receivedDate(entity.getReceivedDate())
       .canceledDate(entity.getCanceledDate())
       .status(entity.getStatus())
@@ -118,31 +115,17 @@ public abstract class InvoiceMapper {
       .orElse(null);
   }
 
-  @Mappings({
-    @Mapping(target = "senderId", source = "sender.id"),
-    @Mapping(target = "receiverId", source = "receiver.id"),
-    @Mapping(target = "confirmerId", source = "confirmer.id")
-  })
   public abstract InvoiceData map(Invoice invoice);
 
   @Mappings({
-    @Mapping(target = "sender", source = "senderId"),
-    @Mapping(target = "receiver", source = "receiverId"),
     @Mapping(target = "codeGenerator", expression = "java(invoiceCodeGenerator)")
   })
   public abstract InvoiceMessages.Create.Request map(
     InvoiceRequests.CreateRequest request);
 
-  @Mappings({
-    @Mapping(target = "sender", source = "senderId"),
-    @Mapping(target = "receiver", source = "receiverId")
-  })
   public abstract InvoiceMessages.Update.Request map(
     InvoiceRequests.UpdateRequest request);
 
-  @Mappings({
-    @Mapping(target = "confirmer", source = "confirmerId"),
-  })
   public abstract InvoiceMessages.Receive.Request map(
     ReceiveRequest request);
 

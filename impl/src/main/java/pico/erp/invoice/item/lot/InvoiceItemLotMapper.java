@@ -1,4 +1,4 @@
-package pico.erp.invoice.item;
+package pico.erp.invoice.item.lot;
 
 import java.util.Optional;
 import org.mapstruct.Mapper;
@@ -8,10 +8,10 @@ import org.mapstruct.Mappings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.AuditorAware;
-import pico.erp.invoice.Invoice;
 import pico.erp.invoice.InvoiceExceptions;
-import pico.erp.invoice.InvoiceId;
-import pico.erp.invoice.InvoiceMapper;
+import pico.erp.invoice.item.InvoiceItem;
+import pico.erp.invoice.item.InvoiceItemId;
+import pico.erp.invoice.item.InvoiceItemMapper;
 import pico.erp.item.ItemData;
 import pico.erp.item.ItemId;
 import pico.erp.item.ItemService;
@@ -21,7 +21,7 @@ import pico.erp.item.lot.ItemLotService;
 import pico.erp.shared.data.Auditor;
 
 @Mapper
-public abstract class InvoiceItemMapper {
+public abstract class InvoiceItemLotMapper {
 
   @Autowired
   protected AuditorAware<Auditor> auditorAware;
@@ -36,39 +36,36 @@ public abstract class InvoiceItemMapper {
 
   @Lazy
   @Autowired
-  private InvoiceItemRepository purchaseRequestItemRepository;
+  private InvoiceItemLotRepository purchaseRequestItemRepository;
 
   @Autowired
-  private InvoiceMapper requestMapper;
+  private InvoiceItemMapper invoiceItemMapper;
 
 
-  protected InvoiceItemId id(InvoiceItem invoiceItem) {
-    return invoiceItem != null ? invoiceItem.getId() : null;
+  protected InvoiceItemLotId id(InvoiceItemLot invoiceItemLot) {
+    return invoiceItemLot != null ? invoiceItemLot.getId() : null;
   }
 
   @Mappings({
-    @Mapping(target = "invoiceId", source = "invoice.id"),
+    @Mapping(target = "invoiceItemId", source = "invoiceItem.id"),
     @Mapping(target = "createdBy", ignore = true),
     @Mapping(target = "createdDate", ignore = true),
     @Mapping(target = "lastModifiedBy", ignore = true),
     @Mapping(target = "lastModifiedDate", ignore = true)
   })
-  public abstract InvoiceItemEntity jpa(InvoiceItem data);
+  public abstract InvoiceItemLotEntity jpa(InvoiceItemLot data);
 
-  public InvoiceItem jpa(InvoiceItemEntity entity) {
-    return InvoiceItem.builder()
+  public InvoiceItemLot jpa(InvoiceItemLotEntity entity) {
+    return InvoiceItemLot.builder()
       .id(entity.getId())
-      .invoice(map(entity.getInvoiceId()))
-      .itemId(entity.getItemId())
-      .itemSpecCode(entity.getItemSpecCode())
+      .invoiceItem(map(entity.getInvoiceItemId()))
+      .itemLotCode(entity.getItemLotCode())
       .quantity(entity.getQuantity())
-      .unit(entity.getUnit())
-      .remark(entity.getRemark())
       .build();
   }
 
-  public InvoiceItem map(InvoiceItemId purchaseRequestItemId) {
-    return Optional.ofNullable(purchaseRequestItemId)
+  public InvoiceItemLot map(InvoiceItemLotId itemLotId) {
+    return Optional.ofNullable(itemLotId)
       .map(id -> purchaseRequestItemRepository.findBy(id)
         .orElseThrow(InvoiceExceptions.NotFoundException::new)
       )
@@ -87,30 +84,30 @@ public abstract class InvoiceItemMapper {
       .orElse(null);
   }
 
-  protected Invoice map(InvoiceId invoiceId) {
-    return requestMapper.map(invoiceId);
+  protected InvoiceItem map(InvoiceItemId invoiceItemId) {
+    return invoiceItemMapper.map(invoiceItemId);
   }
 
   @Mappings({
-    @Mapping(target = "invoiceId", source = "invoice.id")
+    @Mapping(target = "invoiceItemId", source = "invoiceItem.id")
   })
-  public abstract InvoiceItemData map(InvoiceItem item);
+  public abstract InvoiceItemLotData map(InvoiceItemLot item);
 
   @Mappings({
-    @Mapping(target = "invoice", source = "invoiceId")
+    @Mapping(target = "invoiceItem", source = "invoiceItemId")
   })
-  public abstract InvoiceItemMessages.Create.Request map(
-    InvoiceItemRequests.CreateRequest request);
+  public abstract InvoiceItemLotMessages.Create.Request map(
+    InvoiceItemLotRequests.CreateRequest request);
 
-  public abstract InvoiceItemMessages.Update.Request map(
-    InvoiceItemRequests.UpdateRequest request);
+  public abstract InvoiceItemLotMessages.Update.Request map(
+    InvoiceItemLotRequests.UpdateRequest request);
 
-  public abstract InvoiceItemMessages.Delete.Request map(
-    InvoiceItemRequests.DeleteRequest request);
+  public abstract InvoiceItemLotMessages.Delete.Request map(
+    InvoiceItemLotRequests.DeleteRequest request);
 
 
   public abstract void pass(
-    InvoiceItemEntity from, @MappingTarget InvoiceItemEntity to);
+    InvoiceItemLotEntity from, @MappingTarget InvoiceItemLotEntity to);
 
 
 }

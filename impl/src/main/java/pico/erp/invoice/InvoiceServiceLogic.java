@@ -2,11 +2,9 @@ package pico.erp.invoice;
 
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
-import pico.erp.audit.AuditService;
 import pico.erp.invoice.InvoiceRequests.CancelRequest;
 import pico.erp.invoice.InvoiceRequests.ReceiveRequest;
 import pico.erp.shared.Public;
@@ -28,17 +26,12 @@ public class InvoiceServiceLogic implements InvoiceService {
   @Autowired
   private InvoiceMapper mapper;
 
-  @Lazy
-  @Autowired
-  private AuditService auditService;
-
   @Override
   public void cancel(CancelRequest request) {
     val invoice = invoiceRepository.findBy(request.getId())
       .orElseThrow(InvoiceExceptions.NotFoundException::new);
     val response = invoice.apply(mapper.map(request));
     invoiceRepository.update(invoice);
-    auditService.commit(invoice);
     eventPublisher.publishEvents(response.getEvents());
   }
 
@@ -50,7 +43,6 @@ public class InvoiceServiceLogic implements InvoiceService {
       throw new InvoiceExceptions.AlreadyExistsException();
     }
     val created = invoiceRepository.create(invoice);
-    auditService.commit(created);
     eventPublisher.publishEvents(response.getEvents());
     return mapper.map(created);
   }
@@ -73,7 +65,6 @@ public class InvoiceServiceLogic implements InvoiceService {
       .orElseThrow(InvoiceExceptions.NotFoundException::new);
     val response = invoice.apply(mapper.map(request));
     invoiceRepository.update(invoice);
-    auditService.commit(invoice);
     eventPublisher.publishEvents(response.getEvents());
   }
 
@@ -83,7 +74,6 @@ public class InvoiceServiceLogic implements InvoiceService {
       .orElseThrow(InvoiceExceptions.NotFoundException::new);
     val response = invoice.apply(mapper.map(request));
     invoiceRepository.update(invoice);
-    auditService.commit(invoice);
     eventPublisher.publishEvents(response.getEvents());
   }
 

@@ -11,10 +11,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
-import pico.erp.audit.annotation.Audit;
 import pico.erp.invoice.Invoice;
-import pico.erp.item.ItemData;
-import pico.erp.item.lot.ItemLotData;
+import pico.erp.item.ItemId;
+import pico.erp.item.spec.ItemSpecCode;
 import pico.erp.shared.data.UnitKind;
 
 /**
@@ -26,7 +25,6 @@ import pico.erp.shared.data.UnitKind;
 @EqualsAndHashCode(of = "id")
 @Builder(toBuilder = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Audit(alias = "invoice-item")
 public class InvoiceItem implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -36,15 +34,15 @@ public class InvoiceItem implements Serializable {
 
   Invoice invoice;
 
-  ItemData item;
+  ItemId itemId;
 
-  ItemLotData itemLot;
+  ItemSpecCode itemSpecCode;
 
   BigDecimal quantity;
 
-  String remark;
-
   UnitKind unit;
+
+  String remark;
 
   public InvoiceItem() {
 
@@ -52,13 +50,14 @@ public class InvoiceItem implements Serializable {
 
   public InvoiceItemMessages.Create.Response apply(
     InvoiceItemMessages.Create.Request request) {
-    if (!request.getInvoice().isUpdatable()) {
+    this.invoice = request.getInvoice();
+    if (!isUpdatable()) {
       throw new InvoiceItemExceptions.CannotCreateException();
     }
     this.id = request.getId();
-    this.invoice = request.getInvoice();
-    this.item = request.getItem();
-    this.itemLot = request.getItemLot();
+
+    this.itemId = request.getItemId();
+    this.itemSpecCode = request.getItemSpecCode();
     this.quantity = request.getQuantity();
     this.unit = request.getUnit();
     this.remark = request.getRemark();
@@ -70,7 +69,7 @@ public class InvoiceItem implements Serializable {
 
   public InvoiceItemMessages.Update.Response apply(
     InvoiceItemMessages.Update.Request request) {
-    if (!this.invoice.isUpdatable()) {
+    if (!isUpdatable()) {
       throw new InvoiceItemExceptions.CannotUpdateException();
     }
     this.quantity = request.getQuantity();
@@ -82,12 +81,16 @@ public class InvoiceItem implements Serializable {
 
   public InvoiceItemMessages.Delete.Response apply(
     InvoiceItemMessages.Delete.Request request) {
-    if (!this.invoice.isUpdatable()) {
+    if (!isUpdatable()) {
       throw new InvoiceItemExceptions.CannotDeleteException();
     }
     return new InvoiceItemMessages.Delete.Response(
       Arrays.asList(new InvoiceItemEvents.DeletedEvent(this.id))
     );
+  }
+
+  public boolean isUpdatable() {
+    return this.invoice.isUpdatable();
   }
 
 

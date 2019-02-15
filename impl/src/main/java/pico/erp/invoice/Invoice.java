@@ -11,10 +11,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
-import pico.erp.audit.annotation.Audit;
-import pico.erp.company.CompanyData;
+import pico.erp.company.CompanyId;
 import pico.erp.shared.data.Address;
-import pico.erp.user.UserData;
+import pico.erp.user.UserId;
 
 /**
  * 주문 접수
@@ -25,7 +24,6 @@ import pico.erp.user.UserData;
 @EqualsAndHashCode(of = "id")
 @Builder(toBuilder = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Audit(alias = "invoice")
 public class Invoice implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -35,9 +33,9 @@ public class Invoice implements Serializable {
 
   InvoiceCode code;
 
-  CompanyData sender;
+  CompanyId senderId;
 
-  CompanyData receiver;
+  CompanyId receiverId;
 
   Address receiveAddress;
 
@@ -49,7 +47,7 @@ public class Invoice implements Serializable {
 
   InvoiceStatusKind status;
 
-  UserData confirmer;
+  UserId confirmerId;
 
   String remark;
 
@@ -61,8 +59,8 @@ public class Invoice implements Serializable {
   public InvoiceMessages.Create.Response apply(
     InvoiceMessages.Create.Request request) {
     this.id = request.getId();
-    this.sender = request.getSender();
-    this.receiver = request.getReceiver();
+    this.senderId = request.getSenderId();
+    this.receiverId = request.getReceiverId();
     this.receiveAddress = request.getReceiveAddress();
     this.status = InvoiceStatusKind.WAITING;
     this.dueDate = request.getDueDate();
@@ -79,8 +77,8 @@ public class Invoice implements Serializable {
       throw new InvoiceExceptions.CannotUpdateException();
     }
     this.dueDate = request.getDueDate();
-    this.sender = request.getSender();
-    this.receiver = request.getReceiver();
+    this.senderId = request.getSenderId();
+    this.receiverId = request.getReceiverId();
     this.receiveAddress = request.getReceiveAddress();
     this.remark = request.getRemark();
     return new InvoiceMessages.Update.Response(
@@ -106,7 +104,7 @@ public class Invoice implements Serializable {
     if (!isReceivable()) {
       throw new InvoiceExceptions.CannotReceiveException();
     }
-    this.confirmer = request.getConfirmer();
+    this.confirmerId = request.getConfirmerId();
     this.status = InvoiceStatusKind.RECEIVED;
     this.receivedDate = OffsetDateTime.now();
     return new InvoiceMessages.Receive.Response(

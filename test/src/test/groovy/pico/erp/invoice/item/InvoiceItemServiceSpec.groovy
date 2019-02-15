@@ -10,7 +10,12 @@ import org.springframework.transaction.annotation.Transactional
 import pico.erp.invoice.InvoiceId
 import pico.erp.invoice.InvoiceRequests
 import pico.erp.invoice.InvoiceService
+import pico.erp.invoice.item.lot.InvoiceItemLotId
+import pico.erp.invoice.item.lot.InvoiceItemLotRequests
+import pico.erp.invoice.item.lot.InvoiceItemLotService
 import pico.erp.item.ItemId
+import pico.erp.item.lot.ItemLotCode
+import pico.erp.item.spec.ItemSpecCode
 import pico.erp.shared.IntegrationConfiguration
 import pico.erp.shared.data.UnitKind
 import pico.erp.user.UserId
@@ -30,9 +35,18 @@ class InvoiceItemServiceSpec extends Specification {
   @Autowired
   InvoiceItemService invoiceItemService
 
+  @Autowired
+  InvoiceItemLotService invoiceItemLotService
+
   def invoiceId = InvoiceId.from("invoice-1")
 
   def id = InvoiceItemId.from("invoice-item-1")
+
+  def lotId = InvoiceItemLotId.from("invoice-item-lot-1")
+
+  def itemSpecCode = ItemSpecCode.NOT_APPLICABLE
+
+  def itemLotCode = ItemLotCode.from("20190215")
 
   def unknownId = InvoiceItemId.from("unknown")
 
@@ -67,9 +81,21 @@ class InvoiceItemServiceSpec extends Specification {
         id: id,
         invoiceId: invoiceId,
         itemId: itemId,
+        itemSpecCode: itemSpecCode,
         quantity: 100,
         unit: UnitKind.EA,
         remark: "품목 비고"
+      )
+    )
+  }
+
+  def createItemLot() {
+    invoiceItemLotService.create(
+      new InvoiceItemLotRequests.CreateRequest(
+        id: lotId,
+        invoiceItemId: id,
+        itemLotCode: itemLotCode,
+        quantity: 100
       )
     )
   }
@@ -80,6 +106,7 @@ class InvoiceItemServiceSpec extends Specification {
         id: InvoiceItemId.from("invoice-item-2"),
         invoiceId: invoiceId,
         itemId: itemId,
+        itemSpecCode: itemSpecCode,
         quantity: 100,
         unit: UnitKind.EA,
         remark: "품목 비고"
@@ -228,6 +255,19 @@ class InvoiceItemServiceSpec extends Specification {
     deleteItem()
     then:
     thrown(InvoiceItemExceptions.CannotDeleteException)
+  }
+
+  def "LOT - LOT 생성"() {
+    when:
+    createItem()
+    createItemLot()
+    def lot = invoiceItemLotService.get(lotId)
+    then:
+    then:
+    lot.id == lotId
+    lot.invoiceItemId == id
+    lot.itemLotCode == itemLotCode
+    lot.quantity == 100
   }
 
 

@@ -31,8 +31,8 @@ public class InvoiceItemRepositoryJpa implements InvoiceItemRepository {
   private InvoiceItemMapper mapper;
 
   @Override
-  public InvoiceItem create(InvoiceItem planItem) {
-    val entity = mapper.jpa(planItem);
+  public InvoiceItem create(InvoiceItem item) {
+    val entity = mapper.jpa(item);
     val created = repository.save(entity);
     return mapper.jpa(created);
   }
@@ -60,9 +60,9 @@ public class InvoiceItemRepositoryJpa implements InvoiceItemRepository {
   }
 
   @Override
-  public void update(InvoiceItem planItem) {
-    val entity = repository.findOne(planItem.getId());
-    mapper.pass(mapper.jpa(planItem), entity);
+  public void update(InvoiceItem item) {
+    val entity = repository.findOne(item.getId());
+    mapper.pass(mapper.jpa(item), entity);
     repository.save(entity);
   }
 }

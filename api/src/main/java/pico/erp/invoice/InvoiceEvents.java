@@ -14,7 +14,7 @@ public interface InvoiceEvents {
 
     public final static String CHANNEL = "event.invoice.created";
 
-    private InvoiceId invoiceId;
+    private InvoiceId id;
 
     public String channel() {
       return CHANNEL;
@@ -29,7 +29,7 @@ public interface InvoiceEvents {
 
     public final static String CHANNEL = "event.invoice.progressed";
 
-    private InvoiceId invoiceId;
+    private InvoiceId id;
 
     public String channel() {
       return CHANNEL;
@@ -44,7 +44,7 @@ public interface InvoiceEvents {
 
     public final static String CHANNEL = "event.invoice.determined";
 
-    private InvoiceId invoiceId;
+    private InvoiceId id;
 
     public String channel() {
       return CHANNEL;
@@ -59,7 +59,7 @@ public interface InvoiceEvents {
 
     public final static String CHANNEL = "event.invoice.updated";
 
-    private InvoiceId invoiceId;
+    private InvoiceId id;
 
     public String channel() {
       return CHANNEL;
@@ -74,7 +74,7 @@ public interface InvoiceEvents {
 
     public final static String CHANNEL = "event.invoice.canceled";
 
-    private InvoiceId invoiceId;
+    private InvoiceId id;
 
     public String channel() {
       return CHANNEL;
@@ -89,7 +89,7 @@ public interface InvoiceEvents {
 
     public final static String CHANNEL = "event.invoice.received";
 
-    private InvoiceId invoiceId;
+    private InvoiceId id;
 
     public String channel() {
       return CHANNEL;
@@ -104,7 +104,7 @@ public interface InvoiceEvents {
 
     public final static String CHANNEL = "event.invoice.sent";
 
-    private InvoiceId invoiceId;
+    private InvoiceId id;
 
     public String channel() {
       return CHANNEL;
@@ -119,7 +119,7 @@ public interface InvoiceEvents {
 
     public final static String CHANNEL = "event.invoice.rejected";
 
-    private InvoiceId invoiceId;
+    private InvoiceId id;
 
     public String channel() {
       return CHANNEL;
