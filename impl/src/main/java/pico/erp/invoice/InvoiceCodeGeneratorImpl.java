@@ -20,10 +20,10 @@ public class InvoiceCodeGeneratorImpl implements InvoiceCodeGenerator {
     val begin = now.with(LocalTime.MIN);
     val end = now.with(LocalTime.MAX);
     val count = invoiceRepository.countCreatedBetween(begin, end);
-    val date =
-      Integer.toString(now.getYear() - 1900, 36) + Integer.toString(now.getMonthValue(), 16)
-        + Integer.toString(now.getDayOfMonth(), 36);
-    val code = String.format("%s-%04d", date, count + 1).toUpperCase();
+    val code = String
+      .format("IV%03d%02d%02d-%04d", now.getYear() % 1000, now.getMonthValue(), now.getDayOfMonth(),
+        count + 1).toUpperCase();
     return InvoiceCode.from(code);
   }
+
 }

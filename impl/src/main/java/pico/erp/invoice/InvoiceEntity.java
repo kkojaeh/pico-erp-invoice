@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.Index;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -33,7 +34,9 @@ import pico.erp.shared.data.Auditor;
 import pico.erp.user.UserId;
 
 @Entity(name = "Invoice")
-@Table(name = "INV_INVOICE")
+@Table(name = "INV_INVOICE", indexes = {
+  @Index(columnList = "createdDate")
+})
 @Data
 @EqualsAndHashCode(of = "id")
 @FieldDefaults(level = AccessLevel.PRIVATE)
