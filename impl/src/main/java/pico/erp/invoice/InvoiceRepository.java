@@ -1,6 +1,6 @@
 package pico.erp.invoice;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import javax.validation.constraints.NotNull;
 import org.springframework.stereotype.Repository;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface InvoiceRepository {
 
-  long countCreatedBetween(OffsetDateTime begin, OffsetDateTime end);
+  long countCreatedBetween(LocalDateTime begin, LocalDateTime end);
 
   Invoice create(@NotNull Invoice orderAcceptance);
 

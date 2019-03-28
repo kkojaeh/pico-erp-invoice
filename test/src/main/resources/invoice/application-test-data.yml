@@ -3,7 +3,7 @@ data:
   - id: invoice-1
     receiver-id: CUST1
     sender-id: SUPP1
-    due-date: "2020-12-20T09:44:03+09:00"
+    due-date: "2020-12-20T09:44:03"
     remark: 비고 내용
     receive-address:
       postal-code: '13496'

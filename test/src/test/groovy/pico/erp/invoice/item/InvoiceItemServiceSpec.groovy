@@ -1,32 +1,32 @@
 package pico.erp.invoice.item
 
+import kkojaeh.spring.boot.component.SpringBootTestComponent
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.context.annotation.ComponentScan
-import org.springframework.context.annotation.Configuration
 import org.springframework.test.annotation.Rollback
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.transaction.annotation.Transactional
-import pico.erp.invoice.InvoiceId
-import pico.erp.invoice.InvoiceRequests
-import pico.erp.invoice.InvoiceService
+import pico.erp.company.CompanyApplication
+import pico.erp.invoice.*
 import pico.erp.invoice.item.lot.InvoiceItemLotId
 import pico.erp.invoice.item.lot.InvoiceItemLotRequests
 import pico.erp.invoice.item.lot.InvoiceItemLotService
+import pico.erp.item.ItemApplication
 import pico.erp.item.ItemId
 import pico.erp.item.lot.ItemLotCode
 import pico.erp.item.spec.ItemSpecCode
-import pico.erp.shared.IntegrationConfiguration
+import pico.erp.project.ProjectApplication
+import pico.erp.shared.TestParentApplication
 import pico.erp.shared.data.UnitKind
+import pico.erp.user.UserApplication
 import pico.erp.user.UserId
 import spock.lang.Specification
 
-@SpringBootTest(classes = [IntegrationConfiguration])
+@SpringBootTest(classes = [InvoiceApplication, TestConfig])
+@SpringBootTestComponent(parent = TestParentApplication, siblings = [ItemApplication, UserApplication, ProjectApplication, CompanyApplication])
 @Transactional
 @Rollback
 @ActiveProfiles("test")
-@Configuration
-@ComponentScan("pico.erp.config")
 class InvoiceItemServiceSpec extends Specification {
 
   @Autowired

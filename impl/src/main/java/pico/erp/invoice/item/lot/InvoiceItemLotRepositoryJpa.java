@@ -39,12 +39,12 @@ public class InvoiceItemLotRepositoryJpa implements InvoiceItemLotRepository {
 
   @Override
   public void deleteBy(InvoiceItemLotId id) {
-    repository.delete(id);
+    repository.deleteById(id);
   }
 
   @Override
   public boolean exists(InvoiceItemLotId id) {
-    return repository.exists(id);
+    return repository.existsById(id);
   }
 
   @Override
@@ -55,13 +55,13 @@ public class InvoiceItemLotRepositoryJpa implements InvoiceItemLotRepository {
 
   @Override
   public Optional<InvoiceItemLot> findBy(InvoiceItemLotId id) {
-    return Optional.ofNullable(repository.findOne(id))
+    return repository.findById(id)
       .map(mapper::jpa);
   }
 
   @Override
   public void update(InvoiceItemLot itemLot) {
-    val entity = repository.findOne(itemLot.getId());
+    val entity = repository.findById(itemLot.getId()).get();
     mapper.pass(mapper.jpa(itemLot), entity);
     repository.save(entity);
   }
