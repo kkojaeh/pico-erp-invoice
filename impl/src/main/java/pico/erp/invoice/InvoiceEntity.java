@@ -2,7 +2,7 @@ package pico.erp.invoice;
 
 
 import java.io.Serializable;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
@@ -60,7 +60,7 @@ public class InvoiceEntity implements Serializable {
   })
   InvoiceCode code;
 
-  OffsetDateTime dueDate;
+  LocalDateTime dueDate;
 
   @AttributeOverrides({
     @AttributeOverride(name = "value", column = @Column(name = "RECEIVER_ID", length = TypeDefinitions.ID_LENGTH))
@@ -89,9 +89,9 @@ public class InvoiceEntity implements Serializable {
   })
   UserId confirmerId;
 
-  OffsetDateTime receivedDate;
+  LocalDateTime receivedDate;
 
-  OffsetDateTime canceledDate;
+  LocalDateTime canceledDate;
 
   @Column(length = TypeDefinitions.ENUM_LENGTH)
   @Enumerated(EnumType.STRING)
@@ -107,7 +107,7 @@ public class InvoiceEntity implements Serializable {
 
   @CreatedDate
   @Column(updatable = false)
-  OffsetDateTime createdDate;
+  LocalDateTime createdDate;
 
   @Embedded
   @AttributeOverrides({
@@ -118,6 +118,6 @@ public class InvoiceEntity implements Serializable {
   Auditor lastModifiedBy;
 
   @LastModifiedDate
-  OffsetDateTime lastModifiedDate;
+  LocalDateTime lastModifiedDate;
 
 }

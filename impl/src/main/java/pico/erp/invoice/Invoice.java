@@ -1,7 +1,7 @@
 package pico.erp.invoice;
 
 import java.io.Serializable;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import javax.persistence.Id;
 import lombok.AccessLevel;
@@ -39,11 +39,11 @@ public class Invoice implements Serializable {
 
   Address receiveAddress;
 
-  OffsetDateTime dueDate;
+  LocalDateTime dueDate;
 
-  OffsetDateTime receivedDate;
+  LocalDateTime receivedDate;
 
-  OffsetDateTime canceledDate;
+  LocalDateTime canceledDate;
 
   InvoiceStatusKind status;
 
@@ -93,7 +93,7 @@ public class Invoice implements Serializable {
       throw new InvoiceExceptions.CannotCancelException();
     }
     this.status = InvoiceStatusKind.CANCELED;
-    this.canceledDate = OffsetDateTime.now();
+    this.canceledDate = LocalDateTime.now();
     return new InvoiceMessages.Cancel.Response(
       Arrays.asList(new InvoiceEvents.CanceledEvent(this.id))
     );
@@ -106,7 +106,7 @@ public class Invoice implements Serializable {
     }
     this.confirmerId = request.getConfirmerId();
     this.status = InvoiceStatusKind.RECEIVED;
-    this.receivedDate = OffsetDateTime.now();
+    this.receivedDate = LocalDateTime.now();
     return new InvoiceMessages.Receive.Response(
       Arrays.asList(new InvoiceEvents.ReceivedEvent(this.id))
     );

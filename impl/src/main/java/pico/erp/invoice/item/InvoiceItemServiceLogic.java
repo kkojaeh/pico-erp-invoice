@@ -2,6 +2,7 @@ package pico.erp.invoice.item;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import kkojaeh.spring.boot.component.ComponentBean;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,12 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import pico.erp.invoice.InvoiceId;
 import pico.erp.invoice.item.InvoiceItemRequests.DeleteRequest;
-import pico.erp.shared.Public;
 import pico.erp.shared.event.EventPublisher;
 
 @SuppressWarnings("Duplicates")
 @Service
-@Public
+@ComponentBean
 @Transactional
 @Validated
 public class InvoiceItemServiceLogic implements InvoiceItemService {

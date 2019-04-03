@@ -1,6 +1,6 @@
 package pico.erp.invoice;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ interface InvoiceEntityRepository extends
   CrudRepository<InvoiceEntity, InvoiceId> {
 
   @Query("SELECT COUNT(i) FROM Invoice i WHERE i.createdDate >= :begin AND i.createdDate <= :end")
-  long countCreatedBetween(@Param("begin") OffsetDateTime begin, @Param("end") OffsetDateTime end);
+  long countCreatedBetween(@Param("begin") LocalDateTime begin, @Param("end") LocalDateTime end);
 
 }
 
@@ -30,7 +30,7 @@ public class InvoiceRepositoryJpa implements InvoiceRepository {
   private InvoiceMapper mapper;
 
   @Override
-  public long countCreatedBetween(OffsetDateTime begin, OffsetDateTime end) {
+  public long countCreatedBetween(LocalDateTime begin, LocalDateTime end) {
     return repository.countCreatedBetween(begin, end);
   }
 
@@ -43,23 +43,23 @@ public class InvoiceRepositoryJpa implements InvoiceRepository {
 
   @Override
   public void deleteBy(InvoiceId id) {
-    repository.delete(id);
+    repository.deleteById(id);
   }
 
   @Override
   public boolean exists(InvoiceId id) {
-    return repository.exists(id);
+    return repository.existsById(id);
   }
 
   @Override
   public Optional<Invoice> findBy(InvoiceId id) {
-    return Optional.ofNullable(repository.findOne(id))
+    return repository.findById(id)
       .map(mapper::jpa);
   }
 
   @Override
   public void update(Invoice plan) {
-    val entity = repository.findOne(plan.getId());
+    val entity = repository.findById(plan.getId()).get();
     mapper.pass(mapper.jpa(plan), entity);
     repository.save(entity);
   }

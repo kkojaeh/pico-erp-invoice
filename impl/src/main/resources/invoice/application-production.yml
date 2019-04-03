@@ -9,9 +9,9 @@ spring:
   datasource:
     hikari:
       maximum-pool-size: 4
-
-flyway:
-  locations: classpath:invoice/flyway/{vendor}
-  table: flyway_schema_history_invoice
-  encoding: UTF-8
-  baseline-on-migrate: true
+  flyway:
+    locations: classpath:invoice/flyway/{vendor}
+    table: flyway_schema_history_invoice
+    encoding: UTF-8
+    baseline-on-migrate: true
+    enabled: true
