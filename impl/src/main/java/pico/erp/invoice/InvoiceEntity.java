@@ -2,7 +2,7 @@ package pico.erp.invoice;
 
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
@@ -13,6 +13,8 @@ import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Index;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -23,9 +25,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import pico.erp.company.CompanyId;
 import pico.erp.shared.TypeDefinitions;
@@ -60,7 +60,7 @@ public class InvoiceEntity implements Serializable {
   })
   InvoiceCode code;
 
-  LocalDateTime dueDate;
+  OffsetDateTime dueDate;
 
   @AttributeOverrides({
     @AttributeOverride(name = "value", column = @Column(name = "RECEIVER_ID", length = TypeDefinitions.ID_LENGTH))
@@ -89,9 +89,9 @@ public class InvoiceEntity implements Serializable {
   })
   UserId confirmerId;
 
-  LocalDateTime receivedDate;
+  OffsetDateTime receivedDate;
 
-  LocalDateTime canceledDate;
+  OffsetDateTime canceledDate;
 
   @Column(length = TypeDefinitions.ENUM_LENGTH)
   @Enumerated(EnumType.STRING)
@@ -105,9 +105,8 @@ public class InvoiceEntity implements Serializable {
   @CreatedBy
   Auditor createdBy;
 
-  @CreatedDate
   @Column(updatable = false)
-  LocalDateTime createdDate;
+  OffsetDateTime createdDate;
 
   @Embedded
   @AttributeOverrides({
@@ -117,7 +116,17 @@ public class InvoiceEntity implements Serializable {
   @LastModifiedBy
   Auditor lastModifiedBy;
 
-  @LastModifiedDate
-  LocalDateTime lastModifiedDate;
+  OffsetDateTime lastModifiedDate;
+
+  @PrePersist
+  private void onCreate() {
+    createdDate = OffsetDateTime.now();
+    lastModifiedDate = OffsetDateTime.now();
+  }
+
+  @PreUpdate
+  private void onUpdate() {
+    lastModifiedDate = OffsetDateTime.now();
+  }
 
 }

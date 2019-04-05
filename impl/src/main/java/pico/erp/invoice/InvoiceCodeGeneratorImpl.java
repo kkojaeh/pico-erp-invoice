@@ -1,7 +1,7 @@
 package pico.erp.invoice;
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.OffsetDateTime;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -16,7 +16,7 @@ public class InvoiceCodeGeneratorImpl implements InvoiceCodeGenerator {
 
   @Override
   public InvoiceCode generate(Invoice invoice) {
-    val now = LocalDateTime.now();
+    val now = OffsetDateTime.now();
     val begin = now.with(LocalTime.MIN);
     val end = now.with(LocalTime.MAX);
     val count = invoiceRepository.countCreatedBetween(begin, end);

@@ -1,6 +1,6 @@
 package pico.erp.invoice;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Collection;
 import javax.validation.Valid;
 import javax.validation.constraints.Future;
@@ -27,7 +27,7 @@ public interface InvoiceMessages {
 
       @Future
       @NotNull
-      LocalDateTime dueDate;
+      OffsetDateTime dueDate;
 
       @NotNull
       CompanyId senderId;
@@ -62,7 +62,7 @@ public interface InvoiceMessages {
 
       @Future
       @NotNull
-      LocalDateTime dueDate;
+      OffsetDateTime dueDate;
 
       @NotNull
       CompanyId senderId;

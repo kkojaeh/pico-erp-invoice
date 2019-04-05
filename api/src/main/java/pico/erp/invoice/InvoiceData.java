@@ -1,6 +1,6 @@
 package pico.erp.invoice;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import lombok.Data;
 import pico.erp.company.CompanyId;
 import pico.erp.shared.data.Address;
@@ -19,11 +19,11 @@ public class InvoiceData {
 
   Address receiveAddress;
 
-  LocalDateTime dueDate;
+  OffsetDateTime dueDate;
 
-  LocalDateTime receivedDate;
+  OffsetDateTime receivedDate;
 
-  LocalDateTime canceledDate;
+  OffsetDateTime canceledDate;
 
   InvoiceStatusKind status;
 

@@ -1,6 +1,6 @@
 package pico.erp.invoice;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,11 +24,11 @@ public class InvoiceView {
 
   Address receiveAddress;
 
-  LocalDateTime dueDate;
+  OffsetDateTime dueDate;
 
-  LocalDateTime receivedDate;
+  OffsetDateTime receivedDate;
 
-  LocalDateTime canceledDate;
+  OffsetDateTime canceledDate;
 
   InvoiceStatusKind status;
 
@@ -52,9 +52,9 @@ public class InvoiceView {
 
     Set<InvoiceStatusKind> statuses;
 
-    LocalDateTime startDueDate;
+    OffsetDateTime startDueDate;
 
-    LocalDateTime endDueDate;
+    OffsetDateTime endDueDate;
 
   }
 

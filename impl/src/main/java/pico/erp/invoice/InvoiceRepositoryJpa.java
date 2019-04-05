@@ -1,6 +1,6 @@
 package pico.erp.invoice;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Optional;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ interface InvoiceEntityRepository extends
   CrudRepository<InvoiceEntity, InvoiceId> {
 
   @Query("SELECT COUNT(i) FROM Invoice i WHERE i.createdDate >= :begin AND i.createdDate <= :end")
-  long countCreatedBetween(@Param("begin") LocalDateTime begin, @Param("end") LocalDateTime end);
+  long countCreatedBetween(@Param("begin") OffsetDateTime begin, @Param("end") OffsetDateTime end);
 
 }
 
@@ -30,7 +30,7 @@ public class InvoiceRepositoryJpa implements InvoiceRepository {
   private InvoiceMapper mapper;
 
   @Override
-  public long countCreatedBetween(LocalDateTime begin, LocalDateTime end) {
+  public long countCreatedBetween(OffsetDateTime begin, OffsetDateTime end) {
     return repository.countCreatedBetween(begin, end);
   }
 
